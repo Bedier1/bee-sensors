@@ -25,7 +25,8 @@ jobs:
           node-version: v14.21.3
       - name: Install Node.js dependencies
         run: npm install
-
+      - name: Install Run tests
+        run: npm test
       - name: Run linters
         uses: wearerequired/lint-action@v2.3.0
         with:
