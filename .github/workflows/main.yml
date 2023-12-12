@@ -37,5 +37,5 @@ jobs:
         with:
          target: Dockerfil
         env:
-         GITHUB_TOKEN: ${{ secrets.GHS }}
+         GITHUB_TOKEN:  ${{ secrets.GHS}}
             
