@@ -32,3 +32,7 @@ jobs:
           #     eslint: true
           token: ${{ secrets.GHS}}
           prettier: true
+      - name: lint dockerfile
+        uses: replicatedhq/dockerfilelint-action@v1
+        with:
+          path: "./Dockerfile"
