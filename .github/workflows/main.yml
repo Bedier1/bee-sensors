@@ -30,7 +30,7 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2.3.0
         with:
-          eslint: true
+     #     eslint: true
           token: ${{ secrets.GHS}}
-      #    prettier: true
+          prettier: true
        
