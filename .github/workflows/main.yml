@@ -37,4 +37,4 @@ jobs:
         with:
           target: Dockerfile
         env:
-          GITHUB_TOKEN: ${{ secrets.GHS}}
+          GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
