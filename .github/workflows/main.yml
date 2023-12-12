@@ -24,11 +24,12 @@ jobs:
         with:
           node-version: v14.21.3
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm ci
 
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2
+        uses: wearerequired/lint-action@v2.3.0
         with:
           eslint: true
-          prettier: true
+      #    prettier: true
+       
