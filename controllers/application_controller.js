@@ -48,8 +48,20 @@ module.exports = {
     }
 
     if (count > 0) {
+      let status;
       const averageTemperature = totalTemperature / count;
-      res.json({ averageTemperature: averageTemperature.toFixed(2) });
+      if (averageTemperature < 10) {
+        status = "Too Cold";
+      } else if (averageTemperature >= 10 && averageTemperature <= 36) {
+        status = "Good";
+      } else {
+        status = "Too Hot";
+      }
+
+      res.json({
+        averageTemperature: averageTemperature.toFixed(2),
+        status: status,
+      });
     } else {
       res.status(404).send("No recent temperature data available");
     }
