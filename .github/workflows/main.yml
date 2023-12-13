@@ -31,7 +31,7 @@ jobs:
         uses: wearerequired/lint-action@v2.3.0
         with:
           #     eslint: true
-          token: ${{ secrets.GHS}}
+          token: ${{ secrets.GHS }}
           prettier: true
       - name: Docker Lint
         uses: luke142367/Docker-Lint-Action@v1.1.1
@@ -39,7 +39,7 @@ jobs:
           target: Dockerfile
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  build:
+  check-version:
     needs: run-linters
     runs-on: ubuntu-latest
 
