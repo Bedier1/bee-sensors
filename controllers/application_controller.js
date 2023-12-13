@@ -9,20 +9,23 @@ module.exports = {
   },
 
   senseBox: async (req, res, next) => {
-    let id = req.params.id;
-    console.log(id);
-    let ids = req.params.id.split(","); // Assuming you pass multiple IDs as a comma-separated string
+    // Retrieve box IDs from environment variables
+    const boxIds = [
+      process.env.box1,
+      process.env.box2,
+      process.env.box3, // Add more as needed
+    ].filter(Boolean); // Filter out any undefined or falsy values
+
     let totalTemperature = 0;
     let count = 0;
 
-    for (const id of ids) {
+    for (const id of boxIds) {
       try {
         const response = await axios.get(
           `https://api.opensensemap.org/boxes/${id}`,
         );
         const data = response.data;
 
-        // Assuming the structure of the data is similar to the provided JSON
         const temperatureSensor = data.sensors.find(
           (sensor) => sensor.title === "Temperatur",
         );
@@ -32,9 +35,8 @@ module.exports = {
           );
           const currentTime = new Date();
 
-          // Check if the measurement is no older than 1 hour
           if (currentTime - measurementTime <= 3600000) {
-            // 3600000 milliseconds = 1 hour
+            // 1 hour
             totalTemperature += parseFloat(
               temperatureSensor.lastMeasurement.value,
             );
@@ -43,18 +45,15 @@ module.exports = {
         }
       } catch (error) {
         console.error("Error fetching data for senseBox ID:", id, error);
-        // Optionally handle the error (e.g., continue to the next ID, send an error response, etc.)
       }
     }
 
     if (count > 0) {
-      let status;
       const averageTemperature = totalTemperature / count;
-      if (averageTemperature < 10) {
-        status = "Too Cold";
-      } else if (averageTemperature >= 10 && averageTemperature <= 36) {
+      let status = "Too Cold";
+      if (averageTemperature >= 10 && averageTemperature <= 36) {
         status = "Good";
-      } else {
+      } else if (averageTemperature > 36) {
         status = "Too Hot";
       }
 

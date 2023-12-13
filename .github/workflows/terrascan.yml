@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'kubernetes/**'
+      - "kubernetes/**"
 
 jobs:
   terrascan-security-check:
@@ -16,16 +16,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run Terrascan
-        uses:  tenable/terrascan-action@v1.4.1
+        uses: tenable/terrascan-action@v1.4.1
         id: terrascan
         with:
-          iac_type: 'k8s'
-          iac_version: 'v1'
-          iac_dir: 'kubernetes' 
+          iac_type: "k8s"
+          iac_version: "v1"
+          iac_dir: "kubernetes"
           sarif_upload: true
           only_warn: true
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-           sarif_file: terrascan.sarif
-          
+          sarif_file: terrascan.sarif
