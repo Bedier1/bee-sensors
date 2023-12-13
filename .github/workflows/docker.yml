@@ -19,10 +19,9 @@ jobs:
               with:
                 username: ${{ secrets.DOCKER_HUB_USERNAME }}
                 password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}      
-            - name: Build and push
-              uses:  docker/build-push-action@v5
-              with:
-                context: .
-                push: true
-                tags: mohamedbedier/beesens:${{ steps.package_version.outputs.VERSION }}
+            - name: Build Docker image
+              run: docker build -t mohamedbedier/beesens:${{ steps.package_version.outputs.VERSION }} .
+        
+            - name: Push Docker image
+              run: docker push mohamedbedier/beesens:${{ steps.package_version.outputs.VERSION }}
 
