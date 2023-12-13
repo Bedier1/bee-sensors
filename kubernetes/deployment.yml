@@ -15,7 +15,14 @@ spec:
         app: beesens
     spec:
       containers:
-      - name: beesens
-        image: mohamedbedier/beesens:v1.1.0
-        ports:
-        - containerPort: 3000 # Replace with your app's port
+        - name: beesens
+          image: mohamedbedier/beesens:v1.1.0
+          ports:
+            - containerPort: 3000 # Replace with your app's port
+          env:
+            - name: box1
+              value: "5eba5fbad46fb8001b799786"
+            - name: box2
+              value: "5e60cf5557703e001bdae7f8"
+            - name: box3
+              value: "5eb99cacd46fb8001b2ce04c"
