@@ -44,23 +44,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v3
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: v14.21.3
-    - name: Install dependencies
-      run: npm install
-    - name: Start Application
-      run: node server.js &
-    - name: Check /version endpoint
-      run: |
-        sudo apt install jq -y
-        sleep 5 # give your application some time to start
-        VERSION=$(curl http://localhost:3000/api/version | jq -r  .version)
-        echo "Version endpoint response: $VERSION"
-        if [[ $VERSION != "1.0.0" ]]; then
-          echo "Version mismatch"
-          exit 1
-        fi
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: v14.21.3
+      - name: Install dependencies
+        run: npm install
+      - name: Start Application
+        run: node server.js &
+      - name: Check /version endpoint
+        run: |
+          sudo apt install jq -y
+          sleep 5 # give your application some time to start
+          VERSION=$(curl http://localhost:3000/api/version | jq -r  .version)
+          echo "Version endpoint response: $VERSION"
+          if [[ $VERSION != "1.1.0" ]]; then
+            echo "Version mismatch"
+            exit 1
+          fi
