@@ -10,6 +10,6 @@ describe("getVersion", () => {
     await getVersion(request, response, nextFunction);
     const responseData = JSON.parse(response._getData());
 
-    expect(responseData.version).toBe("1.0.0");
+    expect(responseData.version).toBe("1.1.0");
   });
 });
