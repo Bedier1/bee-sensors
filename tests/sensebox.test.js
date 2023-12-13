@@ -1,21 +1,24 @@
 jest.mock("axios");
 const axios = require("axios");
 const httpMocks = require("node-mocks-http");
-const { senseBox } = require("../controllers/application_controller.js"); // Update this path to the actual path of your module
+const { senseBox } = require("../controllers/application_controller.js");
 
 describe("senseBox", () => {
+  // Set up mock environment variables before each test
+  beforeEach(() => {
+    process.env.box1 = "5eba5fbad46fb8001b799786";
+    process.env.box2 = "5eba5fbad46fb8001b799787";
+    // Add more mock box IDs as needed
+  });
+
   it("should return the average temperature and status from multiple senseBoxes", async () => {
-    const mockRequest = httpMocks.createRequest({
-      params: {
-        id: "5eba5fbad46fb8001b799786,5eba5fbad46fb8001b799787", // Example senseBox IDs
-      },
-    });
+    const mockRequest = httpMocks.createRequest();
     const mockResponse = httpMocks.createResponse();
     const nextFunction = jest.fn();
 
     // Mocking Axios responses for each senseBox
     axios.get.mockImplementation((url) => {
-      if (url.includes("5eba5fbad46fb8001b799786")) {
+      if (url.includes(process.env.box1)) {
         return Promise.resolve({
           data: {
             sensors: [
@@ -29,7 +32,7 @@ describe("senseBox", () => {
             ],
           },
         });
-      } else if (url.includes("5eba5fbad46fb8001b799787")) {
+      } else if (url.includes(process.env.box2)) {
         return Promise.resolve({
           data: {
             sensors: [
@@ -54,10 +57,4 @@ describe("senseBox", () => {
     expect(responseData.averageTemperature).toBe("21.00");
     expect(responseData.status).toBe("Good");
   });
-
-  it("should return 404 if no recent data is available", async () => {
-    // ... (This test case remains unchanged)
-  });
-
-  // Add more test cases as needed to cover different scenarios
 });
