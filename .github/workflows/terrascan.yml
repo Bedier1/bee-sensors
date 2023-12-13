@@ -1,0 +1,31 @@
+name: Terrascan
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'kubernetes/**'
+
+jobs:
+  terrascan-security-check:
+    name: Run Terrascan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run Terrascan
+        uses: accurics/terrascan-action@master
+        id: terrascan
+        with:
+          iac_type: 'k8s'
+          iac_version: 'v1'
+          iac_dir: 'kubernetes' 
+          sarif_upload: true
+          only_warn: true
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+           sarif_file: terrascan.sarif
+          

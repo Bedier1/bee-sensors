@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beesens-deployment
+  labels:
+    app: beesens
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beesens
+  template:
+    metadata:
+      labels:
+        app: beesens
+    spec:
+      containers:
+      - name: beesens
+        image: mohamedbedier/beesens:v1.1.0
+        ports:
+        - containerPort: 3000 # Replace with your app's port
