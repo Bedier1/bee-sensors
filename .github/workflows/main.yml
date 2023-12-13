@@ -11,9 +11,7 @@ jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      contents: read
+    
 
     steps:
       - name: Check out Git repository
@@ -31,7 +29,7 @@ jobs:
         uses: wearerequired/lint-action@v2.3.0
         with:
           #     eslint: true
-          token: ${{ secrets.GHS}}
+          token: ${{ secrets.GITHUB_TOKEN }}
           prettier: true
       - name: Docker Lint
         uses: luke142367/Docker-Lint-Action@v1.1.1
