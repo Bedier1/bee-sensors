@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run Terrascan
-        uses: accurics/terrascan-action@master
+        uses:  tenable/terrascan-action@v1.4.1
         id: terrascan
         with:
           iac_type: 'k8s'
