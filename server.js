@@ -11,13 +11,13 @@ const {
 // Import package.json
 const application_routes = require("./routes/application_routes");
 const metricsRoute = require("./routes/promethues_routes.js");
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(metricsMiddleware);
 
 app.use("/api/", application_routes);
 app.use("/metrics", metricsRoute);
+app.use("/readyz", application_routes);
 
 // Version endpoint
 

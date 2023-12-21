@@ -6,5 +6,5 @@ const applicationController = require("../controllers/application_controller");
 router.get("/version", applicationController.getVersion);
 
 router.get("/temperature", applicationController.senseBox);
-
+router.get("/", applicationController.readyz);
 module.exports = router;
