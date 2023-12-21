@@ -1,11 +1,11 @@
 // Importing necessary modules
-const axios = require('axios');
-const redis = require('../controllers/redis.js');
-const myModule = require('../controllers/application_controller.js'); // Replace with the actual path of your module
+const axios = require("axios");
+const redis = require("../controllers/redis.js");
+const myModule = require("../controllers/application_controller.js"); // Replace with the actual path of your module
 
 // Mocking axios and redis
-jest.mock('axios');
-jest.mock('../controllers/redis.js', () => {
+jest.mock("axios");
+jest.mock("../controllers/redis.js", () => {
   return {
     get: jest.fn(),
     set: jest.fn(),
@@ -14,26 +14,26 @@ jest.mock('../controllers/redis.js', () => {
 });
 
 // Setting up environment variables
-process.env.box1 = '5eba5fbad46fb8001b799786';
-process.env.box2 = '5e60cf5557703e001bdae7f8';
-process.env.box3 = '5eb99cacd46fb8001b2ce04c';
+process.env.box1 = "5eba5fbad46fb8001b799786";
+process.env.box2 = "5e60cf5557703e001bdae7f8";
+process.env.box3 = "5eb99cacd46fb8001b2ce04c";
 
-describe('Your Module Tests', () => {
+describe("Your Module Tests", () => {
   // This will run after each test to close the Redis connection
   afterEach(async () => {
     await redis.quit();
   });
 
   // Test for getVersion
-  describe('getVersion', () => {
-    it('should return the correct version from package.json', async () => {
+  describe("getVersion", () => {
+    it("should return the correct version from package.json", async () => {
       const req = {};
       const res = { json: jest.fn() };
       const next = jest.fn();
 
       await myModule.getVersion(req, res, next);
 
-      const expectedVersion = require('../package.json').version;
+      const expectedVersion = require("../package.json").version;
       expect(res.json).toHaveBeenCalledWith({ version: expectedVersion });
     });
   });
@@ -41,15 +41,21 @@ describe('Your Module Tests', () => {
   // Test for checkSenseBoxAccessibility
 
   // Test for senseBox
-  describe('senseBox', () => {
-    it('should successfully retrieve and cache data', async () => {
+  describe("senseBox", () => {
+    it("should successfully retrieve and cache data", async () => {
       redis.get.mockResolvedValue(null);
       axios.get.mockResolvedValue({
         data: {
           sensors: [
-            { title: "Temperatur", lastMeasurement: { createdAt: new Date().toISOString(), value: "20" } }
-          ]
-        }
+            {
+              title: "Temperatur",
+              lastMeasurement: {
+                createdAt: new Date().toISOString(),
+                value: "20",
+              },
+            },
+          ],
+        },
       });
 
       const req = {};
@@ -64,8 +70,8 @@ describe('Your Module Tests', () => {
   });
 
   // Test for readyz
-  describe('readyz', () => {
-    it('should return 200 OK when conditions are met', async () => {
+  describe("readyz", () => {
+    it("should return 200 OK when conditions are met", async () => {
       redis.get.mockResolvedValue(Date.now().toString());
       axios.get.mockResolvedValue({});
 
@@ -76,7 +82,7 @@ describe('Your Module Tests', () => {
       await myModule.readyz(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.send).toHaveBeenCalledWith('OK');
+      expect(res.send).toHaveBeenCalledWith("OK");
     });
   });
 });

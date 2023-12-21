@@ -14,7 +14,6 @@ jobs:
     permissions:
       checks: write
       contents: read
-    
 
     steps:
       - name: Check out Git repository
@@ -45,9 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       redis:
-       image: redis
-       ports:
-        - 6379:6379
+        image: redis
+        ports:
+          - 6379:6379
 
     steps:
       - name: Check out Git repository
@@ -82,5 +81,3 @@ jobs:
           curl https://github.com/ovh/venom/releases/download/v1.1.0/venom.linux-amd64 -L -o /usr/local/bin/venom && chmod +x /usr/local/bin/venom
           export IS_TTY=true
           venom run testsuite.yml
-
-

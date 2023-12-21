@@ -17,7 +17,7 @@ app.use(metricsMiddleware);
 
 app.use("/api/", application_routes);
 app.use("/metrics", metricsRoute);
-app.use("/readyz",application_routes)
+app.use("/readyz", application_routes);
 
 // Version endpoint
 
