@@ -1,14 +1,14 @@
 name: APIIntegrationTest
 
 vars:
-  url: http://redis:3000
+  url: http://localhost:3000
 
 testcases:
   - name: GET http testcase, with 5 seconds timeout
     steps:
       - type: http
         method: GET
-        url: http://redis:3000/api/temperature
+        url: http://localhost:3000/api/temperature
         timeout: 5
         assertions:
           - result.statuscode ShouldEqual 200
