@@ -59,10 +59,11 @@ jobs:
         run: npm install
       - name: Start Application
         run: |
+         sudo apt-get install -y redis-tools redis-server
           export box1=5eba5fbad46fb8001b799786
           export box2=5e60cf5557703e001bdae7f8
           export box3=5eb99cacd46fb8001b2ce04c
-          export REDIS_HOST=redis
+          export REDIS_HOST=localhost
           export REDIS_PORT=6379
           node server.js &
 
