@@ -14,6 +14,7 @@ jobs:
     permissions:
       checks: write
       contents: read
+    
 
     steps:
       - name: Check out Git repository
@@ -39,9 +40,14 @@ jobs:
           target: Dockerfile
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  check-version:
+  run-app:
     needs: run-linters
     runs-on: ubuntu-latest
+    services:
+      redis:
+       image: redis
+       ports:
+        - 6379:6379
 
     steps:
       - name: Check out Git repository
@@ -53,14 +59,28 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Start Application
-        run: node server.js &
+        run: |
+          export box1=5eba5fbad46fb8001b799786
+          export box2=5e60cf5557703e001bdae7f8
+          export box3=5eb99cacd46fb8001b2ce04c
+          export REDIS_HOST=redis
+          export REDIS_PORT=6379
+          node server.js &
+
       - name: Check /version endpoint
         run: |
           sudo apt install jq -y
           sleep 5 # give your application some time to start
           VERSION=$(curl http://localhost:3000/api/version | jq -r  .version)
           echo "Version endpoint response: $VERSION"
-          if [[ $VERSION != "1.1.0" ]]; then
+          if [[ $VERSION != "1.1.1" ]]; then
             echo "Version mismatch"
             exit 1
           fi
+      - name: Install Venom
+        run: |
+          curl https://github.com/ovh/venom/releases/download/v1.1.0/venom.linux-amd64 -L -o /usr/local/bin/venom && chmod +x /usr/local/bin/venom
+          export IS_TTY=true
+          venom run testsuite.yml
+
+
