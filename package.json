@@ -1,6 +1,6 @@
 {
   "name": "beekeepersensors",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "The goal of this project is to build a scalable RESTful API around openSenseMap but customized to help beekeeper with their chores",
   "main": "server.js",
   "scripts": {

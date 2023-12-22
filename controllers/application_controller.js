@@ -25,8 +25,7 @@ module.exports = {
 
   senseBox: async (req, res, next) => {
     const cacheKey = "senseBoxData";
-    const cacheExpiry = 24; // Cache for 8 minutes
-
+    const cacheExpiry = 240; // 4 minutes in seconds
     try {
       // Try to get data from Redis cache
       const cachedData = await redis.get(cacheKey);
