@@ -125,7 +125,7 @@ module.exports = {
           .status(500)
           .send("More than 50% of the senseBoxes are not accessible.");
       }
-
+/*
       // Check the age of the cached content
       const cachedDataTimestamp = await redis.get(`${cacheKey}_timestamp`);
       if (
@@ -134,7 +134,7 @@ module.exports = {
       ) {
         return res.status(500).send("Cached content is older than 5 minutes.");
       }
-
+*/
       res.status(200).send("OK");
     } catch (error) {
       console.error("Error in /readyz endpoint:", error);
