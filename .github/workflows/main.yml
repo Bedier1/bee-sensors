@@ -67,7 +67,7 @@ jobs:
           sleep 5 # give your application some time to start
           VERSION=$(curl http://localhost:3000/api/version | jq -r  .version)
           echo "Version endpoint response: $VERSION"
-          if [[ $VERSION != "1.1.1" ]]; then
+          if [[ $VERSION != "1.1.2" ]]; then
             echo "Version mismatch"
             exit 1
           fi
