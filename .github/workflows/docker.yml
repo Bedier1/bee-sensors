@@ -33,6 +33,7 @@ jobs:
           path: bee-sensors-manifest-
       - name: Update Helm chart
         run: |
+          cd bee-sensors-manifest-
           ls -la
           pwd
           sed -i "s/tag: .*/tag: \"${{ steps.package_version.outputs.VERSION }}\"/" bee-sensors-manifest-/helm/beechart/values.yaml
