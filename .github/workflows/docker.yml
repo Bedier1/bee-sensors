@@ -24,7 +24,11 @@ jobs:
 
       - name: Push Docker image
         run: docker push mohamedbedier/beesens:${{ steps.package_version.outputs.VERSION }}
-
+  push-to-mainfest-relp:
+      runs-on: ubuntu-latest
+      needs: build-and-push-docker
+      steps:
+        
       - name: Clone bee-sensors-manifest repository
         uses: actions/checkout@v3
         with:
