@@ -24,3 +24,23 @@ jobs:
 
       - name: Push Docker image
         run: docker push mohamedbedier/beesens:${{ steps.package_version.outputs.VERSION }}
+
+      - name: Clone bee-sensors-manifest repository
+        uses: actions/checkout@v3
+        with:
+          repository: bedier1/bee-sensors-manifest-
+          token: ${{ secrets.GITHUB_TOKEN }} # Using GitHub Token for authentication
+          path: bee-sensors-manifest-
+      - name: Update Helm chart
+        run: |
+          sed -i "s/tag: .*/tag: \"${{ steps.package_version.outputs.VERSION }}\"/" bee-sensors-manifest-/helm/beechart/values.yaml
+
+      # Committing and pushing changes
+      - name: Commit and push changes
+        run: |
+          cd bee-sensors-manifest
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add helm/beechart/values.yaml
+          git commit -m "Update image tag to ${{ steps.package_version.outputs.VERSION }}"
+          git push
