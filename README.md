@@ -46,4 +46,4 @@ Instructions for Kubernetes setup and observability stack installation with Graf
 ```bash
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm install lokii grafana/loki-stack --values values.yml
+helm install lokii grafana/loki-stack --values ./kubernetes/observability/values.yml
