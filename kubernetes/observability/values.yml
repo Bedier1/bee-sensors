@@ -1,0 +1,40 @@
+loki:
+  isDefault: false
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+  singleBinary:
+    replicas: 1
+  persistence:
+    volumeClaimsEnabled: true
+    dataVolumeParameters:
+      emptyDir: {}
+    enableStatefulSetAutoDeletePVC: true
+    size: 2Gi
+    storageClass: standard
+    selector: null
+  
+grafana:
+  enabled: true 
+  persistence:
+    type: pvc
+    enabled: true
+    storageClassName: standard
+  image:
+    tag: latest
+    #repository: grafana/grafana
+prometheus:
+  enabled: true
+  isDefault: true
+  url: http://{{ include "prometheus.fullname" .}}:{{ .Values.prometheus.server.service.servicePort }}{{ .Values.prometheus.server.prefixURL }}
+  datasource:
+    jsonData: "{}"
+  persistence:
+    enableStatefulSetAutoDeletePVC: true
+    size: 3Gi
+    storageClass: standard
+    # -- Selector for persistent disk
+# usage helm install    lokii grafana/loki-stack -n loki --set grafana.enabled=true --create-namespace
+# helm repo add grafana https://grafana.github.io/helm-charts
+#helm repo update
