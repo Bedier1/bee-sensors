@@ -36,10 +36,11 @@ jobs:
           cd bee-sensors-manifest-
           ls -la
           pwd
-          sed -i "s/tag: .*/tag: \"${{ steps.package_version.outputs.VERSION }}\"/" bee-sensors-manifest-/helm/beechart/values.yaml
-          cd bee-sensors-manifest-
+          sed -i "s/tag: .*/tag: \"${{ steps.package_version.outputs.VERSION }}\"/" ./helm/beechart/values.yaml
+          git fetch origin main
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git remote set-url  origin https://github.com/Bedier1/bee-sensors-manifest-.git
           git add helm/beechart/values.yaml
           git commit -m "Update image tag to ${{ steps.package_version.outputs.VERSION }}"
-          git push
+          git push origin HEAD
