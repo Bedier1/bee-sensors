@@ -38,7 +38,7 @@ jobs:
       # Committing and pushing changes
       - name: Commit and push changes
         run: |
-          cd bee-sensors-manifest
+          cd bee-sensors-manifest-
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add helm/beechart/values.yaml
