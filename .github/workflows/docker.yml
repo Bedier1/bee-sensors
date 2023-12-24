@@ -38,6 +38,9 @@ jobs:
       # Committing and pushing changes
       - name: Commit and push changes
         run: |
+          ls -la
+          pwd
+          
           cd bee-sensors-manifest-
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
