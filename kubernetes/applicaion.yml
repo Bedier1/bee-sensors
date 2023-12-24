@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sealed-secrets
+  namespace: argo
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Bedier1/bee-sensors.git
+    targetRevision: HEAD
+    path: kubernetes/helm/beechart
+    helm:
+      releaseName: beechart
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
