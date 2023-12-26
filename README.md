@@ -29,7 +29,16 @@ Redis cluster setup in Kubernetes for high availability.
 ### CI/CD Pipelines
 Pipelines for tests, linting, Dockerfile validation, end-to-end testing with Venom, security checks with Scorecard, and Kubernetes manifest validation with Terrascan.
 
-### GitHub Actions Workflow: 'docker-build-and-push'
+### GitHub Actions Workflows: 
+CI pipeline:
+- Checks unit test and integration test
+- Check code and Dockerfile linting
+- ensure endpoint /api/version return correct version
+- run end to end test with venom
+Scorecard Pipeline:
+- scan the code from security issues
+Terrascan:
+- Run pipeline to check k8s mainfest issues and best practices 
 Automates Docker image building and deployment:
 - Checks out the repository.
 - Extracts version from `package.json`.
