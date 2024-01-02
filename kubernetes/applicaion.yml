@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Bedier1/bee-sensors.git
+    repoURL: https://github.com/Bedier1/bee-sensors-manifest-.git
     targetRevision: HEAD
-    path: kubernetes/helm/beechart
+    path: helm/beechart
     helm:
       releaseName: beechart
   destination:
